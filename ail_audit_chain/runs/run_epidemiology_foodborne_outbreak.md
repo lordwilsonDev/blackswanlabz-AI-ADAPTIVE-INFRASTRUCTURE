@@ -24,7 +24,7 @@ Distinguish what the evidence establishes, what it suggests, and what remains un
 | Unexposed attack rate | 8.57% |
 | Crude RR | 7.39 |
 | Crude OR | 18.42 |
-| Approximate 95% CI for RR | 4.17–13.07 |
+| 95% CI for RR (Katz log method) | 4.16–13.12 |
 | Cases reporting exposure | 38 (76%) |
 
 ## Conclusion
