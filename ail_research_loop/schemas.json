@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/ail-moie-recursive-research.schema.json",
+  "title": "AIL + MoIE Recursive Research Protocol",
+  "type": "object",
+  "required": ["ResearchCycle"],
+  "properties": {
+    "ResearchCycle": {
+      "type": "object",
+      "required": ["id", "version", "created_at", "state", "problem", "hypothesis", "predictions"],
+      "properties": {
+        "id": {"type": "string"},
+        "version": {"type": "string", "const": "1.0"},
+        "created_at": {"type": "string", "format": "date-time"},
+        "state": {"type": "string", "enum": ["DRAFT", "PROBLEM_DEFINED", "HYPOTHESIS_FORMED", "PREREGISTERED", "READY_TO_EXECUTE", "EXECUTING", "RESULTS_AVAILABLE", "EVIDENCE_SYNTHESIZED", "JEV_EVALUATED", "THEORY_UPDATED", "REENTRY_READY", "COMPLETE", "BLOCKED", "FAILED_EXECUTION", "INVALIDATED"]},
+        "problem": {"$ref": "#/$defs/Problem"},
+        "hypothesis": {"$ref": "#/$defs/Hypothesis"},
+        "predictions": {"type": "array", "items": {"$ref": "#/$defs/Prediction"}},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/EvidenceItem"}},
+        "jev": {"$ref": "#/$defs/JEVDecision"},
+        "theory_update": {"$ref": "#/$defs/TheoryUpdate"}
+      },
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "Problem": {
+      "type": "object",
+      "required": ["id", "version", "created_at", "domain", "question", "objective"],
+      "properties": {
+        "id": {"type": "string"},
+        "version": {"type": "string"},
+        "created_at": {"type": "string", "format": "date-time"},
+        "domain": {"type": "string"},
+        "question": {"type": "string"},
+        "objective": {"type": "string"},
+        "constraints": {"type": "array", "items": {"type": "string"}},
+        "available_data": {"type": "array", "items": {"type": "string"}},
+        "available_tools": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "Hypothesis": {
+      "type": "object",
+      "required": ["id", "version", "created_at", "problem_id", "null", "primary", "alternatives", "falsification_criteria"],
+      "properties": {
+        "id": {"type": "string"},
+        "version": {"type": "string"},
+        "created_at": {"type": "string", "format": "date-time"},
+        "problem_id": {"type": "string"},
+        "null": {"type": "string"},
+        "primary": {"type": "string"},
+        "alternatives": {"type": "array", "items": {"type": "string"}},
+        "mechanism": {"type": "string"},
+        "falsification_criteria": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "Prediction": {
+      "type": "object",
+      "required": ["id", "hypothesis_id", "outcome", "direction", "preregistered"],
+      "properties": {
+        "id": {"type": "string"},
+        "hypothesis_id": {"type": "string"},
+        "outcome": {"type": "string"},
+        "direction": {"type": "string", "enum": ["increase", "decrease", "equal", "non_monotonic", "conditional", "unknown"]},
+        "threshold": {"type": "number"},
+        "unit": {"type": "string"},
+        "preregistered": {"type": "boolean", "const": true}
+      },
+      "additionalProperties": true
+    },
+    "EvidenceItem": {
+      "type": "object",
+      "required": ["id", "run_id", "claim", "source_type", "directness", "reproducibility", "independence", "method_quality", "confound_control", "consistency"],
+      "properties": {
+        "id": {"type": "string"},
+        "run_id": {"type": "string"},
+        "claim": {"type": "string"},
+        "value": {},
+        "metric": {"type": "string"},
+        "source_type": {"type": "string", "enum": ["executed_code", "real_dataset", "synthetic_data", "literature", "human_observation", "model_assertion"]},
+        "directness": {"type": "number", "minimum": 0, "maximum": 1},
+        "reproducibility": {"type": "number", "minimum": 0, "maximum": 1},
+        "independence": {"type": "number", "minimum": 0, "maximum": 1},
+        "method_quality": {"type": "number", "minimum": 0, "maximum": 1},
+        "confound_control": {"type": "number", "minimum": 0, "maximum": 1},
+        "consistency": {"type": "number", "minimum": 0, "maximum": 1},
+        "contradictory": {"type": "boolean"},
+        "supports": {"type": "array", "items": {"type": "string"}},
+        "contradicts": {"type": "array", "items": {"type": "string"}},
+        "artifact_refs": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "JEVDecision": {
+      "type": "object",
+      "required": ["id", "run_id", "relation", "support_score", "contradiction_score", "quality_score", "decision_margin", "promote", "reentry_required", "rationale", "evidence_ids"],
+      "properties": {
+        "id": {"type": "string"},
+        "run_id": {"type": "string"},
+        "relation": {"type": "string", "enum": ["EQUAL", "NOT_EQUAL", "PARTIAL", "CONDITIONAL", "CONFOUND", "UNKNOWN", "NOVEL"]},
+        "support_score": {"type": "number", "minimum": 0, "maximum": 1},
+        "contradiction_score": {"type": "number", "minimum": 0, "maximum": 1},
+        "quality_score": {"type": "number", "minimum": 0, "maximum": 1},
+        "decision_margin": {"type": "number", "minimum": -1, "maximum": 1},
+        "promote": {"type": "boolean"},
+        "reentry_required": {"type": "boolean"},
+        "rationale": {"type": "string"},
+        "evidence_ids": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "TheoryUpdate": {
+      "type": "object",
+      "required": ["id", "run_id", "original_theory", "updated_theory", "what_changed", "boundary_conditions", "remaining_unknowns"],
+      "properties": {
+        "id": {"type": "string"},
+        "run_id": {"type": "string"},
+        "original_theory": {"type": "string"},
+        "updated_theory": {"type": "string"},
+        "what_changed": {"type": "array", "items": {"type": "string"}},
+        "boundary_conditions": {"type": "array", "items": {"type": "string"}},
+        "remaining_unknowns": {"type": "array", "items": {"type": "string"}},
+        "new_hypothesis": {"type": ["string", "null"]},
+        "next_experiment": {"type": ["string", "null"]}
+      },
+      "additionalProperties": true
+    }
+  }
+}
