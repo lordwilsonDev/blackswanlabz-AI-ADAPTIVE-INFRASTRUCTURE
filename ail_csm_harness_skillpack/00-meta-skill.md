@@ -17,7 +17,7 @@ Turn a user-defined task into a defensible deliverable by decomposing it, gather
 4. Preserve the user's requested artifact type and audience.
 5. Do not let a conclusion determine case definitions, inclusion rules, or evidence selection.
 6. A citation is not validation: verify that the source exists and supports the exact claim.
-7. Fail closed: unresolved critical defects block a “verified” or “final” label.
+7. Fail closed: unresolved critical defects block a "verified" or "final" label.
 8. No skill may silently widen permissions, alter source data, or convert a draft into an external action.
 9. Maintain provenance: every material claim points to evidence or is marked unsupported.
 10. Prefer a small validated chain over adding agents or complexity.
@@ -65,7 +65,7 @@ For each skill, record: status (PASS / FAIL / BLOCKED / N/A), inputs, outputs, e
 - **FINAL-READY:** no unresolved critical defects; all required components present; limitations visible.
 - **BLOCKED:** a critical missing input, false premise, or unverifiable claim prevents the requested standard.
 
-Never claim that an artifact is “perfect,” “proven,” “court-ready,” or “publication-ready” unless the applicable external review and procedural requirements have actually been satisfied.
+Never claim that an artifact is "perfect," "proven," "court-ready," or "publication-ready" unless the applicable external review and procedural requirements have actually been satisfied.
 
 ## Required outputs
 A. Deliverable in requested format.
